@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>[bzoj 4873] [Shoi2017]寿司餐厅 | chrt&#39;s OI Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="n种寿司, 第i种寿司有代号a[i], 区间[i,j]有美味度d[i][j] (i≤j). 每种寿司的份数无限, 取的次数无限. - 每次取走的寿司必须是连续的一段, 且每种各取一份. - 取[l,r]内的寿司会获得[l,r]所有子区间 (包括[l,r]) 的美味度之和. 总美味度是每次获得的美味度之和的累加, 但是每个d[i][j]只会被加一次. - 如果一共吃过c (c&gt;0) 种代号为a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[bzoj 4873] [Shoi2017]寿司餐厅">
+<meta property="og:url" content="https://chrt.github.io/OI/2017/05/28/bzoj4873-sushi/index.html">
+<meta property="og:site_name" content="chrt&#39;s OI Blog">
+<meta property="og:description" content="n种寿司, 第i种寿司有代号a[i], 区间[i,j]有美味度d[i][j] (i≤j). 每种寿司的份数无限, 取的次数无限. - 每次取走的寿司必须是连续的一段, 且每种各取一份. - 取[l,r]内的寿司会获得[l,r]所有子区间 (包括[l,r]) 的美味度之和. 总美味度是每次获得的美味度之和的累加, 但是每个d[i][j]只会被加一次. - 如果一共吃过c (c&gt;0) 种代号为a">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-05-28T16:19:41.000Z">
+<meta property="article:modified_time" content="2021-03-27T05:36:16.819Z">
+<meta property="article:author" content="chrt">
+<meta property="article:tag" content="网络流">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/OI/atom.xml" title="chrt's OI Blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/OI/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/OI/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/OI/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/OI/" id="logo">chrt&#39;s OI Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/OI/">Home</a>
+        
+          <a class="main-nav-link" href="/OI/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/OI/friends">Friends</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/OI/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://chrt.github.io/OI"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-bzoj4873-sushi" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/OI/2017/05/28/bzoj4873-sushi/" class="article-date">
+  <time class="dt-published" datetime="2017-05-28T16:19:41.000Z" itemprop="datePublished">2017-05-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/OI/categories/bzoj/">bzoj</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      [bzoj 4873] [Shoi2017]寿司餐厅
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>n种寿司, 第i种寿司有代号a[i], 区间[i,j]有美味度d[i][j] (i≤j). 每种寿司的份数无限, 取的次数无限. - 每次取走的寿司必须是连续的一段, 且每种各取一份. - 取[l,r]内的寿司会获得[l,r]所有子区间 (包括[l,r]) 的美味度之和. 总美味度是每次获得的美味度之和的累加, 但是每个d[i][j]只会被加一次. - 如果一共吃过c (c&gt;0) 种代号为a的寿司, 需要支付(ma^2+ca)元钱, m是对于所有代号的寿司均相等的常数.</p>
+<p>求总美味度减去花费的总钱数的最大值. (n≤100, a[i]≤1000, d[i][j]是整数, 可能不是正的) <span id="more"></span> 看起来很像网络流, 但是, <em>每个d[i][j]只会被加一次</em>, <em>吃过代号为a的寿司则支付ma^2 (不论吃了多少)</em>, 这两个怎么处理呢?</p>
+<p>出题人爱吃寿司的Kiana在APIO讲课时说, 这是<strong>最大权闭合子图</strong>.</p>
+<p>咦? 确实很符合最大权闭合子图的模型......</p>
+<p>区间[l,r] (l&lt;r) 向[l,r-1]和[l+1,r]连边, [l,l]向表示代号的点连边即可. <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex" xmlns="http://www.w3.org/2000/svg" width="24.538ex" height="2.452ex" role="img" focusable="false" viewBox="0 -833.9 10845.9 1083.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(278, 0)"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"></path></g><g data-mml-node="mo" transform="translate(1047, 0)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mo" transform="translate(1602.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(2658.6, 0)"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path></g><g data-mml-node="mo" transform="translate(3421.6, 0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msup" transform="translate(3810.6, 0)"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mn" transform="translate(600, 363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(4814.1, 0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g><g data-mml-node="mo" transform="translate(5203.1, 0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g><g data-mml-node="mo" transform="translate(5647.8, 0)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(5925.8, 0)"><path data-c="1D438" d="M492 213Q472 213 472 226Q472 230 477 250T482 285Q482 316 461 323T364 330H312Q311 328 277 192T243 52Q243 48 254 48T334 46Q428 46 458 48T518 61Q567 77 599 117T670 248Q680 270 683 272Q690 274 698 274Q718 274 718 261Q613 7 608 2Q605 0 322 0H133Q31 0 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q146 66 215 342T285 622Q285 629 281 629Q273 632 228 634H197Q191 640 191 642T193 659Q197 676 203 680H757Q764 676 764 669Q764 664 751 557T737 447Q735 440 717 440H705Q698 445 698 453L701 476Q704 500 704 528Q704 558 697 578T678 609T643 625T596 632T532 634H485Q397 633 392 631Q388 629 386 622Q385 619 355 499T324 377Q347 376 372 376H398Q464 376 489 391T534 472Q538 488 540 490T557 493Q562 493 565 493T570 492T572 491T574 487T577 483L544 351Q511 218 508 216Q505 213 492 213Z"></path></g><g data-mml-node="mo" transform="translate(6689.8, 0)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mo" transform="translate(7245.6, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(8301.3, 0)"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"></path></g><g data-mml-node="mo" transform="translate(9064.3, 0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path></g><g data-mml-node="msup" transform="translate(9453.3, 0)"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mn" transform="translate(600, 363) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(10456.9, 0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path></g></g></g></svg></mjx-container></span>.</p>
+<p>积累了一个经验: a或b发生将导致c, 但是它们同时发生并不会使c的影响扩大, 可以考虑一下最大权闭合子图. 有种数字电路的感觉~</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">,</span> inf <span class="token operator">=</span> <span class="token number">1e9</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">MaximumFlow</span> <span class="token punctuation">{</span>
+	<span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> e_size <span class="token operator">=</span> <span class="token number">30500</span><span class="token punctuation">,</span> v_size <span class="token operator">=</span> <span class="token number">5160</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">struct</span> <span class="token class-name">Edge</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> to<span class="token punctuation">,</span> c<span class="token punctuation">,</span> nxt<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> E<span class="token punctuation">[</span>e_size<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">int</span> ptr<span class="token punctuation">,</span> n<span class="token punctuation">,</span> s<span class="token punctuation">,</span> t<span class="token punctuation">,</span> lv<span class="token punctuation">[</span>v_size<span class="token punctuation">]</span><span class="token punctuation">,</span> cur<span class="token punctuation">[</span>v_size<span class="token punctuation">]</span><span class="token punctuation">,</span> adj<span class="token punctuation">[</span>v_size<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	<span class="token function">MaximumFlow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+	<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">,</span> <span class="token keyword">int</span> v<span class="token punctuation">,</span> <span class="token keyword">int</span> f<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		E<span class="token punctuation">[</span>ptr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>Edge<span class="token punctuation">)</span><span class="token punctuation">{</span>v<span class="token punctuation">,</span> f<span class="token punctuation">,</span> adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+		adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> ptr<span class="token operator">++</span><span class="token punctuation">;</span>
+		E<span class="token punctuation">[</span>ptr<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>Edge<span class="token punctuation">)</span><span class="token punctuation">{</span>u<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> adj<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+		adj<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> ptr<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">bool</span> <span class="token function">bfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		queue<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">&gt;</span> Q<span class="token punctuation">;</span>
+		<span class="token function">fill_n</span><span class="token punctuation">(</span>lv<span class="token punctuation">,</span> n<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		lv<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		Q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>Q<span class="token punctuation">.</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">int</span> u <span class="token operator">=</span> Q<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> Q<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> adj<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> i<span class="token punctuation">;</span> i <span class="token operator">=</span> E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>nxt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token keyword">int</span> v <span class="token operator">=</span> E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>to<span class="token punctuation">;</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c <span class="token operator">&amp;&amp;</span> lv<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+					lv<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> lv<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+					Q<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+
+		<span class="token keyword">return</span> lv<span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">int</span> <span class="token function">dfs</span><span class="token punctuation">(</span><span class="token keyword">int</span> u<span class="token punctuation">,</span> <span class="token keyword">int</span> f<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>u <span class="token operator">==</span> t<span class="token punctuation">)</span> <span class="token keyword">return</span> f<span class="token punctuation">;</span>
+		<span class="token keyword">int</span> res <span class="token operator">=</span> f<span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">&amp;</span> i <span class="token operator">=</span> cur<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">;</span> i<span class="token punctuation">;</span> i <span class="token operator">=</span> E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>nxt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token keyword">int</span> v <span class="token operator">=</span> E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>to<span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c <span class="token operator">&amp;&amp;</span> lv<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> lv<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> <span class="token function">min</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+				res <span class="token operator">-=</span> d<span class="token punctuation">;</span>
+				E<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>c <span class="token operator">-=</span> d<span class="token punctuation">;</span>
+				E<span class="token punctuation">[</span>i<span class="token operator">^</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>c <span class="token operator">+=</span> d<span class="token punctuation">;</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>res<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">return</span> f<span class="token operator">-</span>res<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">int</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token keyword">int</span> _n<span class="token punctuation">,</span> <span class="token keyword">int</span> _s<span class="token punctuation">,</span> <span class="token keyword">int</span> _t<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		n <span class="token operator">=</span> _n<span class="token punctuation">,</span> s <span class="token operator">=</span> _s<span class="token punctuation">,</span> t <span class="token operator">=</span> _t<span class="token punctuation">;</span>
+		<span class="token keyword">int</span> f <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">bfs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token function">rep</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> cur<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+			f <span class="token operator">+=</span> <span class="token function">dfs</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> inf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">return</span> f<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span> solver<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> s<span class="token punctuation">,</span> t<span class="token punctuation">,</span> top<span class="token punctuation">,</span> sum<span class="token punctuation">,</span> H<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">,</span> id<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">inline</span> <span class="token keyword">void</span> <span class="token function">link</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">,</span> <span class="token keyword">int</span> w<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>w <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		sum <span class="token operator">+=</span> w<span class="token punctuation">;</span>
+		solver<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> v<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+		solver<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span> t<span class="token punctuation">,</span> <span class="token operator">-</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> n<span class="token punctuation">,</span> m<span class="token punctuation">;</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>n<span class="token punctuation">,</span> <span class="token operator">&amp;</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">rep</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> a<span class="token operator">+</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		H<span class="token punctuation">[</span>top<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">sort</span><span class="token punctuation">(</span>H<span class="token punctuation">,</span> H<span class="token operator">+</span>top<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	top <span class="token operator">=</span> <span class="token function">unique</span><span class="token punctuation">(</span>H<span class="token punctuation">,</span> H<span class="token operator">+</span>top<span class="token punctuation">)</span> <span class="token operator">-</span> H<span class="token punctuation">;</span>
+	s <span class="token operator">=</span> n<span class="token operator">*</span><span class="token punctuation">(</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">+</span> top<span class="token punctuation">,</span> t <span class="token operator">=</span> s<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+	<span class="token function">rep</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> top<span class="token punctuation">)</span> <span class="token function">link</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token operator">-</span>m<span class="token operator">*</span>H<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">*</span>H<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">int</span> cnt <span class="token operator">=</span> top<span class="token punctuation">,</span> d<span class="token punctuation">;</span>
+
+	<span class="token function">rep</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">link</span><span class="token punctuation">(</span>id<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> cnt<span class="token operator">++</span><span class="token punctuation">,</span> d <span class="token operator">-</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">rep</span> <span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">link</span><span class="token punctuation">(</span>id<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> cnt<span class="token operator">++</span><span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token function">rep</span> <span class="token punctuation">(</span>i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		solver<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>id<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">lower_bound</span><span class="token punctuation">(</span>H<span class="token punctuation">,</span> H<span class="token operator">+</span>top<span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span> H<span class="token punctuation">,</span> inf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">rep</span> <span class="token punctuation">(</span>j<span class="token punctuation">,</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			solver<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>id<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> id<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> inf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			solver<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>id<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> id<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span> inf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> sum <span class="token operator">-</span> solver<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span>cnt<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">,</span> s<span class="token punctuation">,</span> t<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://chrt.github.io/OI/2017/05/28/bzoj4873-sushi/" data-id="ckmrh1f4w00e1aotzh353dfj1" data-title="[bzoj 4873] [Shoi2017]寿司餐厅" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/OI/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/OI/2017/05/29/bzoj4871-dendrogram/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          [bzoj 4871] [Shoi2017]摧毁“树状图”
+        
+      </div>
+    </a>
+  
+  
+    <a href="/OI/2017/05/28/cf811/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Codeforces Round #416 (Div. 2)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/OI/categories/51nod/">51nod</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/APIO/">APIO</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/Codeforces/">Codeforces</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/Codeforeces/">Codeforeces</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/Diaries/">Diaries</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/NOI/">NOI</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/NOIP/">NOIP</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/OEIS/">OEIS</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/POI/">POI</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/Software/">Software</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/USACO/">USACO</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/WC/">WC</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/bzoj/">bzoj</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/hdu/">hdu</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/other/">other</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/spoj/">spoj</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/uoj/">uoj</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/uva/">uva</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/%E6%A8%A1%E6%9D%BF/">模板</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/%E7%94%9F%E6%B4%BB/">生活</a></li><li class="category-list-item"><a class="category-list-link" href="/OI/categories/%E7%AC%94%E8%AE%B0/">笔记</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">AC自动机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/BFS/" rel="tag">BFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/BSGS/" rel="tag">BSGS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Brute-Force/" rel="tag">Brute Force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/CDQ%E5%88%86%E6%B2%BB/" rel="tag">CDQ分治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/DFS/" rel="tag">DFS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/FFT/" rel="tag">FFT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/FWT/" rel="tag">FWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/KMP/" rel="tag">KMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/LCA/" rel="tag">LCA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/LCP/" rel="tag">LCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/LCT/" rel="tag">LCT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Manacher/" rel="tag">Manacher</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/RMQ/" rel="tag">RMQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/STL/" rel="tag">STL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Splay/" rel="tag">Splay</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Tarjan/" rel="tag">Tarjan</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Treap/" rel="tag">Treap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/Trie/" rel="tag">Trie</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/bitset/" rel="tag">bitset</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/website/" rel="tag">website</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%B8%89%E5%88%86/" rel="tag">三分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/" rel="tag">中国剩余定理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%BA%8C%E5%88%86/" rel="tag">二分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" rel="tag">二分图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%BA%A4%E4%BA%92/" rel="tag">交互</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%BB%99%E4%BA%BA%E6%8E%8C/" rel="tag">仙人掌</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%BC%97%E6%95%B0/" rel="tag">众数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag">位运算</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%80%8D%E5%A2%9E/" rel="tag">倍增</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7/" rel="tag">决策单调性</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%87%A0%E4%BD%95/" rel="tag">几何</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%87%B8%E5%A3%B3/" rel="tag">凸壳</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%88%86%E5%9D%97/" rel="tag">分块</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%88%86%E6%B2%BB/" rel="tag">分治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag">动态规划</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/" rel="tag">匈牙利算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%8D%95%E8%B0%83%E6%A0%88/" rel="tag">单调栈</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" rel="tag">单调队列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%8F%AF%E5%B9%B6%E5%A0%86/" rel="tag">可并堆</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96/" rel="tag">可持久化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%90%8C%E6%9E%84/" rel="tag">同构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" rel="tag">后缀数组</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" rel="tag">后缀自动机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%90%AF%E5%8F%91%E5%BC%8F%E5%90%88%E5%B9%B6/" rel="tag">启发式合并</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%93%88%E5%B8%8C/" rel="tag">哈希</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%9B%BE%E8%AE%BA/" rel="tag">图论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%9D%97%E7%8A%B6%E6%A0%91/" rel="tag">块状树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%A0%86/" rel="tag">堆</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%AD%97%E5%85%B8%E5%BA%8F/" rel="tag">字典序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag">字符串</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" rel="tag">容斥原理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" rel="tag">平衡树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%B9%B3%E9%9D%A2%E5%9B%BE/" rel="tag">平面图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" rel="tag">并查集</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%89%AB%E6%8F%8F%E7%BA%BF/" rel="tag">扫描线</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97/" rel="tag">括号序列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88/" rel="tag">排列组合</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%8E%92%E5%BA%8F/" rel="tag">排序</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%8F%90%E4%BA%A4%E7%AD%94%E6%A1%88/" rel="tag">提交答案</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%95%B0%E4%BD%8DDP/" rel="tag">数位DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%95%B0%E5%AD%A6/" rel="tag">数学</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%95%B0%E8%AE%BA/" rel="tag">数论</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96/" rel="tag">斜率优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%9B%BF%E7%BD%AA%E7%BE%8A%E6%A0%91/" rel="tag">替罪羊树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" rel="tag">最短路</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%9E%84%E9%80%A0/" rel="tag">构造</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%9E%9A%E4%B8%BE/" rel="tag">枚举</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A0%91/" rel="tag">树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A0%91%E5%A5%97%E6%A0%91/" rel="tag">树套树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A0%91%E5%BD%A2DP/" rel="tag">树形DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag">树状数组</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A0%B9%E5%8F%B7%E7%AE%97%E6%B3%95/" rel="tag">根号算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A6%82%E7%8E%87-%E6%9C%9F%E6%9C%9B/" rel="tag">概率 & 期望</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A6%82%E7%8E%87-%E6%9C%9F%E6%9C%9B/" rel="tag">概率&期望</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%A8%A1%E6%8B%9F/" rel="tag">模拟</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" rel="tag">欧拉函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84/" rel="tag">欧拉路径</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%82%B9%E5%88%86%E6%B2%BB/" rel="tag">点分治</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%89%A9%E7%90%86/" rel="tag">物理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%8A%B6%E5%8E%8BDP/" rel="tag">状压DP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%8E%AF%E5%A5%97%E6%A0%91/" rel="tag">环套树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag">生成函数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag">生成树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95/" rel="tag">矩阵乘法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%AD%9B%E6%B3%95/" rel="tag">筛法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BA%BF%E6%80%A7%E5%9F%BA/" rel="tag">线性基</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag">线段树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BB%84%E5%90%88%E6%B8%B8%E6%88%8F/" rel="tag">组合游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BC%96%E7%A0%81/" rel="tag">编码</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BD%AE%E6%8D%A2/" rel="tag">置换</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E7%BD%AE%E6%8D%A2%E7%BE%A4/" rel="tag">置换群</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" rel="tag">莫比乌斯反演</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%8E%AB%E9%98%9F%E7%AE%97%E6%B3%95/" rel="tag">莫队算法</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%99%9A%E6%A0%91/" rel="tag">虚树</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%AE%A1%E6%95%B0/" rel="tag">计数</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%B4%AA%E5%BF%83/" rel="tag">贪心</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%B6%A3%E9%A2%98/" rel="tag">趣题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E8%BD%BB%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/" rel="tag">轻重链剖分</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E9%80%86%E5%BA%8F%E5%AF%B9/" rel="tag">逆序对</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E9%80%92%E6%8E%A8/" rel="tag">递推</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E9%99%8D%E7%BB%B4/" rel="tag">降维</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E9%9A%8F%E6%9C%BA%E5%8C%96/" rel="tag">随机化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/OI/tags/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83/" rel="tag">高斯消元</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/OI/tags/AC%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 12.5px;">AC自动机</a> <a href="/OI/tags/BFS/" style="font-size: 12px;">BFS</a> <a href="/OI/tags/BSGS/" style="font-size: 10px;">BSGS</a> <a href="/OI/tags/Brute-Force/" style="font-size: 13px;">Brute Force</a> <a href="/OI/tags/CDQ%E5%88%86%E6%B2%BB/" style="font-size: 11px;">CDQ分治</a> <a href="/OI/tags/DFS/" style="font-size: 12px;">DFS</a> <a href="/OI/tags/FFT/" style="font-size: 14.5px;">FFT</a> <a href="/OI/tags/FWT/" style="font-size: 10px;">FWT</a> <a href="/OI/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/OI/tags/KMP/" style="font-size: 10.5px;">KMP</a> <a href="/OI/tags/LCA/" style="font-size: 12px;">LCA</a> <a href="/OI/tags/LCP/" style="font-size: 10.5px;">LCP</a> <a href="/OI/tags/LCT/" style="font-size: 15.5px;">LCT</a> <a href="/OI/tags/Manacher/" style="font-size: 11.5px;">Manacher</a> <a href="/OI/tags/RMQ/" style="font-size: 10px;">RMQ</a> <a href="/OI/tags/STL/" style="font-size: 13px;">STL</a> <a href="/OI/tags/Splay/" style="font-size: 12px;">Splay</a> <a href="/OI/tags/Tarjan/" style="font-size: 10px;">Tarjan</a> <a href="/OI/tags/Treap/" style="font-size: 10.5px;">Treap</a> <a href="/OI/tags/Trie/" style="font-size: 14px;">Trie</a> <a href="/OI/tags/bitset/" style="font-size: 11.5px;">bitset</a> <a href="/OI/tags/website/" style="font-size: 10px;">website</a> <a href="/OI/tags/%E4%B8%89%E5%88%86/" style="font-size: 10px;">三分</a> <a href="/OI/tags/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86/" style="font-size: 11.5px;">中国剩余定理</a> <a href="/OI/tags/%E4%BA%8C%E5%88%86/" style="font-size: 16.5px;">二分</a> <a href="/OI/tags/%E4%BA%8C%E5%88%86%E5%9B%BE/" style="font-size: 11.5px;">二分图</a> <a href="/OI/tags/%E4%BA%A4%E4%BA%92/" style="font-size: 10.5px;">交互</a> <a href="/OI/tags/%E4%BB%99%E4%BA%BA%E6%8E%8C/" style="font-size: 10px;">仙人掌</a> <a href="/OI/tags/%E4%BC%97%E6%95%B0/" style="font-size: 11px;">众数</a> <a href="/OI/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" style="font-size: 10px;">位运算</a> <a href="/OI/tags/%E5%80%8D%E5%A2%9E/" style="font-size: 12.5px;">倍增</a> <a href="/OI/tags/%E5%86%B3%E7%AD%96%E5%8D%95%E8%B0%83%E6%80%A7/" style="font-size: 10.5px;">决策单调性</a> <a href="/OI/tags/%E5%87%A0%E4%BD%95/" style="font-size: 13px;">几何</a> <a href="/OI/tags/%E5%87%B8%E5%A3%B3/" style="font-size: 10.5px;">凸壳</a> <a href="/OI/tags/%E5%88%86%E5%9D%97/" style="font-size: 16px;">分块</a> <a href="/OI/tags/%E5%88%86%E6%B2%BB/" style="font-size: 12.5px;">分治</a> <a href="/OI/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" style="font-size: 20px;">动态规划</a> <a href="/OI/tags/%E5%8C%88%E7%89%99%E5%88%A9%E7%AE%97%E6%B3%95/" style="font-size: 11.5px;">匈牙利算法</a> <a href="/OI/tags/%E5%8D%95%E8%B0%83%E6%A0%88/" style="font-size: 12px;">单调栈</a> <a href="/OI/tags/%E5%8D%95%E8%B0%83%E9%98%9F%E5%88%97/" style="font-size: 10.5px;">单调队列</a> <a href="/OI/tags/%E5%8F%AF%E5%B9%B6%E5%A0%86/" style="font-size: 10px;">可并堆</a> <a href="/OI/tags/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96/" style="font-size: 17px;">可持久化</a> <a href="/OI/tags/%E5%90%8C%E6%9E%84/" style="font-size: 10.5px;">同构</a> <a href="/OI/tags/%E5%90%8E%E7%BC%80%E6%95%B0%E7%BB%84/" style="font-size: 11px;">后缀数组</a> <a href="/OI/tags/%E5%90%8E%E7%BC%80%E8%87%AA%E5%8A%A8%E6%9C%BA/" style="font-size: 12.5px;">后缀自动机</a> <a href="/OI/tags/%E5%90%AF%E5%8F%91%E5%BC%8F%E5%90%88%E5%B9%B6/" style="font-size: 10.5px;">启发式合并</a> <a href="/OI/tags/%E5%93%88%E5%B8%8C/" style="font-size: 11px;">哈希</a> <a href="/OI/tags/%E5%9B%BE%E8%AE%BA/" style="font-size: 11.5px;">图论</a> <a href="/OI/tags/%E5%9D%97%E7%8A%B6%E6%A0%91/" style="font-size: 10.5px;">块状树</a> <a href="/OI/tags/%E5%A0%86/" style="font-size: 11.5px;">堆</a> <a href="/OI/tags/%E5%AD%97%E5%85%B8%E5%BA%8F/" style="font-size: 10px;">字典序</a> <a href="/OI/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" style="font-size: 11px;">字符串</a> <a href="/OI/tags/%E5%AE%B9%E6%96%A5%E5%8E%9F%E7%90%86/" style="font-size: 11px;">容斥原理</a> <a href="/OI/tags/%E5%B9%B3%E8%A1%A1%E6%A0%91/" style="font-size: 12px;">平衡树</a> <a href="/OI/tags/%E5%B9%B3%E9%9D%A2%E5%9B%BE/" style="font-size: 10px;">平面图</a> <a href="/OI/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" style="font-size: 13.5px;">并查集</a> <a href="/OI/tags/%E6%89%AB%E6%8F%8F%E7%BA%BF/" style="font-size: 10.5px;">扫描线</a> <a href="/OI/tags/%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97/" style="font-size: 10px;">括号序列</a> <a href="/OI/tags/%E6%8E%92%E5%88%97%E7%BB%84%E5%90%88/" style="font-size: 14.5px;">排列组合</a> <a href="/OI/tags/%E6%8E%92%E5%BA%8F/" style="font-size: 12px;">排序</a> <a href="/OI/tags/%E6%8F%90%E4%BA%A4%E7%AD%94%E6%A1%88/" style="font-size: 10px;">提交答案</a> <a href="/OI/tags/%E6%95%B0%E4%BD%8DDP/" style="font-size: 12px;">数位DP</a> <a href="/OI/tags/%E6%95%B0%E5%AD%A6/" style="font-size: 17.5px;">数学</a> <a href="/OI/tags/%E6%95%B0%E8%AE%BA/" style="font-size: 19px;">数论</a> <a href="/OI/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96/" style="font-size: 12px;">斜率优化</a> <a href="/OI/tags/%E6%9B%BF%E7%BD%AA%E7%BE%8A%E6%A0%91/" style="font-size: 11px;">替罪羊树</a> <a href="/OI/tags/%E6%9C%80%E7%9F%AD%E8%B7%AF/" style="font-size: 11px;">最短路</a> <a href="/OI/tags/%E6%9E%84%E9%80%A0/" style="font-size: 13.5px;">构造</a> <a href="/OI/tags/%E6%9E%9A%E4%B8%BE/" style="font-size: 13px;">枚举</a> <a href="/OI/tags/%E6%A0%91/" style="font-size: 18.5px;">树</a> <a href="/OI/tags/%E6%A0%91%E5%A5%97%E6%A0%91/" style="font-size: 11.5px;">树套树</a> <a href="/OI/tags/%E6%A0%91%E5%BD%A2DP/" style="font-size: 11px;">树形DP</a> <a href="/OI/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" style="font-size: 13.5px;">树状数组</a> <a href="/OI/tags/%E6%A0%B9%E5%8F%B7%E7%AE%97%E6%B3%95/" style="font-size: 10px;">根号算法</a> <a href="/OI/tags/%E6%A6%82%E7%8E%87-%E6%9C%9F%E6%9C%9B/" style="font-size: 10px;">概率 & 期望</a> <a href="/OI/tags/%E6%A6%82%E7%8E%87-%E6%9C%9F%E6%9C%9B/" style="font-size: 11.5px;">概率&期望</a> <a href="/OI/tags/%E6%A8%A1%E6%8B%9F/" style="font-size: 13px;">模拟</a> <a href="/OI/tags/%E6%AC%A7%E6%8B%89%E5%87%BD%E6%95%B0/" style="font-size: 12px;">欧拉函数</a> <a href="/OI/tags/%E6%AC%A7%E6%8B%89%E8%B7%AF%E5%BE%84/" style="font-size: 10px;">欧拉路径</a> <a href="/OI/tags/%E7%82%B9%E5%88%86%E6%B2%BB/" style="font-size: 12.5px;">点分治</a> <a href="/OI/tags/%E7%89%A9%E7%90%86/" style="font-size: 11px;">物理</a> <a href="/OI/tags/%E7%8A%B6%E5%8E%8BDP/" style="font-size: 10px;">状压DP</a> <a href="/OI/tags/%E7%8E%AF%E5%A5%97%E6%A0%91/" style="font-size: 11px;">环套树</a> <a href="/OI/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" style="font-size: 12px;">生成函数</a> <a href="/OI/tags/%E7%94%9F%E6%88%90%E6%A0%91/" style="font-size: 12px;">生成树</a> <a href="/OI/tags/%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95/" style="font-size: 11.5px;">矩阵乘法</a> <a href="/OI/tags/%E7%AD%9B%E6%B3%95/" style="font-size: 10.5px;">筛法</a> <a href="/OI/tags/%E7%BA%BF%E6%80%A7%E5%9F%BA/" style="font-size: 12.5px;">线性基</a> <a href="/OI/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" style="font-size: 19.5px;">线段树</a> <a href="/OI/tags/%E7%BB%84%E5%90%88%E6%B8%B8%E6%88%8F/" style="font-size: 11.5px;">组合游戏</a> <a href="/OI/tags/%E7%BC%96%E7%A0%81/" style="font-size: 10px;">编码</a> <a href="/OI/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" style="font-size: 15px;">网络流</a> <a href="/OI/tags/%E7%BD%AE%E6%8D%A2/" style="font-size: 10.5px;">置换</a> <a href="/OI/tags/%E7%BD%AE%E6%8D%A2%E7%BE%A4/" style="font-size: 10px;">置换群</a> <a href="/OI/tags/%E8%8E%AB%E6%AF%94%E4%B9%8C%E6%96%AF%E5%8F%8D%E6%BC%94/" style="font-size: 14.5px;">莫比乌斯反演</a> <a href="/OI/tags/%E8%8E%AB%E9%98%9F%E7%AE%97%E6%B3%95/" style="font-size: 12.5px;">莫队算法</a> <a href="/OI/tags/%E8%99%9A%E6%A0%91/" style="font-size: 10.5px;">虚树</a> <a href="/OI/tags/%E8%AE%A1%E6%95%B0/" style="font-size: 11px;">计数</a> <a href="/OI/tags/%E8%B4%AA%E5%BF%83/" style="font-size: 18px;">贪心</a> <a href="/OI/tags/%E8%B6%A3%E9%A2%98/" style="font-size: 11px;">趣题</a> <a href="/OI/tags/%E8%BD%BB%E9%87%8D%E9%93%BE%E5%89%96%E5%88%86/" style="font-size: 11px;">轻重链剖分</a> <a href="/OI/tags/%E9%80%86%E5%BA%8F%E5%AF%B9/" style="font-size: 11.5px;">逆序对</a> <a href="/OI/tags/%E9%80%92%E6%8E%A8/" style="font-size: 12px;">递推</a> <a href="/OI/tags/%E9%99%8D%E7%BB%B4/" style="font-size: 10px;">降维</a> <a href="/OI/tags/%E9%9A%8F%E6%9C%BA%E5%8C%96/" style="font-size: 10px;">随机化</a> <a href="/OI/tags/%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83/" style="font-size: 13.5px;">高斯消元</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/05/">五月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/OI/archives/2017/01/">一月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/OI/2018/02/15/noi2017-queue/">[NOI 2017] 蚯蚓排队</a>
+          </li>
+        
+          <li>
+            <a href="/OI/2017/07/26/oi-story/">OI 故事</a>
+          </li>
+        
+          <li>
+            <a href="/OI/2017/07/26/noi2017-journal/">NOI 2017 游记</a>
+          </li>
+        
+          <li>
+            <a href="/OI/2017/07/17/bzoj3601-lonely-number-theory/">[bzoj 3601] 一个人的数论</a>
+          </li>
+        
+          <li>
+            <a href="/OI/2017/07/16/network-flow/">网络流</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2021 chrt<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/OI/" class="mobile-nav-link">Home</a>
+  
+    <a href="/OI/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/OI/friends" class="mobile-nav-link">Friends</a>
+  
+</nav>
+    
+
+
+<script src="/OI/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/OI/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/OI/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
